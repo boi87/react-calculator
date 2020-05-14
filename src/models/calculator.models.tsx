@@ -5,7 +5,10 @@ export interface CalculatorState {
         n1: string,
         n2: string,
         operator: string
+        result: string
+        prevResult: string
     },
+    evaluating: boolean
     saving: boolean
 }
 
