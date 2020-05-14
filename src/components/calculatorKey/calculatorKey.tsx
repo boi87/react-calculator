@@ -1,8 +1,8 @@
 import React from "react";
 
-import {CalculatorKeyProps} from "../../models/calculator.models";
+import {ICalculatorKeyProps} from "../../models/calculator.models";
 
-const CalculatorKey = (props: CalculatorKeyProps) => {
+const CalculatorKey = (props: ICalculatorKeyProps) => {
     return (
         <button
             className={props.class}

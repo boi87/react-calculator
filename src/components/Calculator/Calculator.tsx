@@ -1,13 +1,14 @@
 import React from "react";
 
 import style from './calculator.module.sass';
-import {CalculatorState} from "../../models/calculator.models";
+import {ICalculatorState} from "../../models/calculator.models";
 import CalculatorKey from "../calculatorKey/calculatorKey";
+import KeyPad from "../keypad/keyPad";
 
 
-class Calculator extends React.Component<any, CalculatorState> {
+class Calculator extends React.Component<any, ICalculatorState> {
 
-    readonly state: Readonly<CalculatorState> = {
+    readonly state: Readonly<ICalculatorState> = {
         calculator: {
             n1: '',
             n2: '',
@@ -97,7 +98,7 @@ class Calculator extends React.Component<any, CalculatorState> {
     };
 
 
-    evaluate = () => {
+    handleEvaluate = () => {
         if (this.state.calculator.operator !== '' && this.state.calculator.n1 !== '' && this.state.calculator.n2 !== '') {
 
             this.setState(state => ({...state, evaluating: true}));
@@ -108,6 +109,11 @@ class Calculator extends React.Component<any, CalculatorState> {
             });
 
         }
+    };
+
+    handleSave = () => {
+        // PHP part
+        console.log('php');
     };
 
     updateDisplays = () => {
@@ -177,31 +183,10 @@ class Calculator extends React.Component<any, CalculatorState> {
                     </div>
                     <div className={style.calculatorDisplay}>{this.state.calculator.display}</div>
 
-                    <div className={style.calculatorKeys}>
-
-                        <CalculatorKey class={style.keyOperator} handleClick={this.handleInput} value={'+'}
-                                       displayValue={'+'}/>
-                        <CalculatorKey class={style.keyOperator} handleClick={this.handleInput} value={'-'}
-                                       displayValue={'-'}/>
-                        <CalculatorKey class={style.keyOperator} handleClick={this.handleInput} value={'*'}
-                                       displayValue={'x'}/>
-                        <CalculatorKey class={style.keyOperator} handleClick={this.handleInput} value={'/'}
-                                       displayValue={'÷'}/>
-                        <CalculatorKey handleClick={this.handleInput} value={'7'}/>
-                        <CalculatorKey handleClick={this.handleInput} value={'8'}/>
-                        <CalculatorKey handleClick={this.handleInput} value={'9'}/>
-                        <CalculatorKey handleClick={this.handleInput} value={'4'}/>
-                        <CalculatorKey handleClick={this.handleInput} value={'5'}/>
-                        <CalculatorKey handleClick={this.handleInput} value={'6'}/>
-                        <CalculatorKey handleClick={this.handleInput} value={'1'}/>
-                        <CalculatorKey handleClick={this.handleInput} value={'2'}/>
-                        <CalculatorKey handleClick={this.handleInput} value={'3'}/>
-                        <CalculatorKey handleClick={this.handleInput} value={'0'}/>
-                        <CalculatorKey handleClick={this.handleInput} value={'.'}/>
-                        <CalculatorKey handleClick={this.handleInput} value={'C'}/>
-                        <CalculatorKey handleClick={this.handleInput} value={'SAVE'}/>
-                        <CalculatorKey class={style.keyEqual} handleClick={this.evaluate} value={'='}/>
-                    </div>
+               <KeyPad
+                   onInputEvent={this.handleInput}
+                   onEvaluateEvent={this.handleEvaluate}
+                   onSaveEvent={this.handleSave}/>
                 </div>
             </div>
         )
