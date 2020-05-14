@@ -1,6 +1,6 @@
 import React from 'react';
-import './App.scss';
-import Container from "./components/container/container";
+import './App.sass';
+import Container from "./containers/container/container";
 
 function App() {
   return (
