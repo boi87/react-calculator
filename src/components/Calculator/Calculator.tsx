@@ -3,6 +3,7 @@ import React from "react";
 import style from './calculator.module.sass';
 import {ICalculatorState} from "../../models/calculator.models";
 import KeyPad from "../keypad/keyPad";
+import Display from "../display/display";
 
 
 class Calculator extends React.Component<any, ICalculatorState> {
@@ -177,15 +178,12 @@ class Calculator extends React.Component<any, ICalculatorState> {
         return (
             <div>
                 <div className={style.calculator}>
-                    <div className={style.calculatorUpperDisplay}>
-                        {this.state.calculator.upperDisplay}
-                    </div>
-                    <div className={style.calculatorDisplay}>{this.state.calculator.display}</div>
-
-               <KeyPad
-                   onInputEvent={this.handleInput}
-                   onEvaluateEvent={this.handleEvaluate}
-                   onSaveEvent={this.handleSave}/>
+                    <Display upperDisplay={this.state.calculator.upperDisplay}
+                             mainDisplay={this.state.calculator.display}/>
+                    <KeyPad
+                        onInputEvent={this.handleInput}
+                        onEvaluateEvent={this.handleEvaluate}
+                        onSaveEvent={this.handleSave}/>
                 </div>
             </div>
         )

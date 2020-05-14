@@ -12,6 +12,11 @@ export interface ICalculatorState {
     saving: boolean
 }
 
+export interface IDisplayProps {
+    upperDisplay: string
+    mainDisplay: string
+}
+
 export interface IKeyPadProps {
     onInputEvent: (input: { value: string; displayValue: string | undefined; }) => void,
     onEvaluateEvent: () => void
