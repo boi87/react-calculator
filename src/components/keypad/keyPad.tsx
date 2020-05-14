@@ -1,19 +1,29 @@
 import React from "react";
-import style from "../Calculator/calculator.module.sass";
+
 import CalculatorKey from "../calculatorKey/calculatorKey";
+
 import {IKeyPadProps} from "../../models/calculator.models";
+import style from './keyPad.module.sass';
 
 const KeyPad = (props: IKeyPadProps) => {
     return (
         <div className={style.calculatorKeys}>
 
-            <CalculatorKey class={style.keyOperator} handleClick={props.onInputEvent} value={'+'}
+            <CalculatorKey class={style.keyOperator}
+                           handleClick={props.onInputEvent}
+                           value={'+'}
                            displayValue={'+'}/>
-            <CalculatorKey class={style.keyOperator} handleClick={props.onInputEvent} value={'-'}
+            <CalculatorKey class={style.keyOperator}
+                           handleClick={props.onInputEvent}
+                           value={'-'}
                            displayValue={'-'}/>
-            <CalculatorKey class={style.keyOperator} handleClick={props.onInputEvent} value={'*'}
+            <CalculatorKey class={style.keyOperator}
+                           handleClick={props.onInputEvent}
+                           value={'*'}
                            displayValue={'x'}/>
-            <CalculatorKey class={style.keyOperator} handleClick={props.onInputEvent} value={'/'}
+            <CalculatorKey class={style.keyOperator}
+                           handleClick={props.onInputEvent}
+                           value={'/'}
                            displayValue={'÷'}/>
             <CalculatorKey handleClick={props.onInputEvent} value={'7'}/>
             <CalculatorKey handleClick={props.onInputEvent} value={'8'}/>
@@ -28,7 +38,10 @@ const KeyPad = (props: IKeyPadProps) => {
             <CalculatorKey handleClick={props.onInputEvent} value={'.'}/>
             <CalculatorKey handleClick={props.onInputEvent} value={'C'}/>
             <CalculatorKey handleClick={props.onSaveEvent} value={'SAVE'}/>
-            <CalculatorKey class={style.keyEqual} handleClick={props.onEvaluateEvent} value={'='}/>
+            <CalculatorKey
+                class={style.keyEqual}
+                handleClick={props.onEvaluateEvent}
+                value={'='}/>
         </div>
 
     )

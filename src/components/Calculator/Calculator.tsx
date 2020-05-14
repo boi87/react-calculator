@@ -2,7 +2,6 @@ import React from "react";
 
 import style from './calculator.module.sass';
 import {ICalculatorState} from "../../models/calculator.models";
-import CalculatorKey from "../calculatorKey/calculatorKey";
 import KeyPad from "../keypad/keyPad";
 
 

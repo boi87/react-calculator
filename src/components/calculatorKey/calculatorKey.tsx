@@ -1,5 +1,7 @@
 import React from "react";
 
+import style from './calculatorKey.module.sass';
+
 import {ICalculatorKeyProps} from "../../models/calculator.models";
 
 const CalculatorKey = (props: ICalculatorKeyProps) => {
