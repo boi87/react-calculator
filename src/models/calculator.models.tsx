@@ -6,3 +6,10 @@ export interface CalculatorState {
     },
     saving: boolean
 }
+
+export interface CalculatorKeyProps {
+    handleClick: (value: string) => void,
+    value: string
+    displayValue?: string
+    class?: string,
+}
