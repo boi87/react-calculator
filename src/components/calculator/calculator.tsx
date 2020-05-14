@@ -19,42 +19,42 @@ class Calculator extends React.Component<any, CalculatorState> {
     };
 
 
-
-
-    addToInput = (input: {value: string, displayValue: string | undefined}) => {
-
-        if (!isNaN(+input.value) || input.value === '.') {
+    handleInput = (input: { value: string, displayValue: string | undefined }) => {
+        console.log(input.value);
+        if (input.value === 'C') {
+            this.handleCancel();
+        } else if (!isNaN(+input.value) || input.value === '.') {
             if (this.state.calculator.operator === '') {
                 this.setState(state => (
-                        {
-                            ...state,
-                            calculator: {
-                                ...state.calculator,
-                                n1: this.state.calculator.n1 + input.value,
-                            }
-                        })
-                    );
+                    {
+                        ...state,
+                        calculator: {
+                            ...state.calculator,
+                            n1: this.state.calculator.n1 + input.value,
+                        }
+                    })
+                );
             } else {
                 this.setState(state => (
-                        {
-                            ...state,
-                            calculator: {
-                                ...state.calculator,
-                                n2: state.calculator.n2 + input.value,
-                            }
-                        })
-                    )
+                    {
+                        ...state,
+                        calculator: {
+                            ...state.calculator,
+                            n2: state.calculator.n2 + input.value,
+                        }
+                    })
+                )
             }
         } else {
             this.setState(state => (
-                        {
-                            ...state,
-                            calculator: {
-                                ...state.calculator,
-                                operator: (input.displayValue || input.value),
-                            }
-                        })
-                    );
+                {
+                    ...state,
+                    calculator: {
+                        ...state.calculator,
+                        operator: (input.displayValue || input.value),
+                    }
+                })
+            );
         }
 
         this.updateUpperDisplay()
@@ -67,6 +67,21 @@ class Calculator extends React.Component<any, CalculatorState> {
                 calculator: {
                     ...state.calculator,
                     upperDisplay: state.calculator.n1 + state.calculator.operator + state.calculator.n2
+                }
+            })
+        )
+    };
+
+    handleCancel = () => {
+        this.setState(state => (
+            {
+                ...state,
+                calculator: {
+                    upperDisplay: '',
+                    display: '0',
+                    operator: '',
+                    n1: '',
+                    n2: ''
                 }
             })
         )
@@ -97,7 +112,7 @@ class Calculator extends React.Component<any, CalculatorState> {
                 reject(err);
             }
         })
-    }
+    };
 
     evaluate = () => {
 
@@ -115,27 +130,27 @@ class Calculator extends React.Component<any, CalculatorState> {
 
                     <div className={style.calculatorKeys}>
 
-                        <CalculatorKey class={style.keyOperator} handleClick={this.addToInput} value={'+'}
+                        <CalculatorKey class={style.keyOperator} handleClick={this.handleInput} value={'+'}
                                        displayValue={'+'}/>
-                        <CalculatorKey class={style.keyOperator} handleClick={this.addToInput} value={'-'}
+                        <CalculatorKey class={style.keyOperator} handleClick={this.handleInput} value={'-'}
                                        displayValue={'-'}/>
-                        <CalculatorKey class={style.keyOperator} handleClick={this.addToInput} value={'*'}
-                        displayValue={'x'}/>
-                        <CalculatorKey class={style.keyOperator} handleClick={this.addToInput} value={'/'}
+                        <CalculatorKey class={style.keyOperator} handleClick={this.handleInput} value={'*'}
+                                       displayValue={'x'}/>
+                        <CalculatorKey class={style.keyOperator} handleClick={this.handleInput} value={'/'}
                                        displayValue={'÷'}/>
-                        <CalculatorKey handleClick={this.addToInput} value={'7'}/>
-                        <CalculatorKey handleClick={this.addToInput} value={'8'}/>
-                        <CalculatorKey handleClick={this.addToInput} value={'9'}/>
-                        <CalculatorKey handleClick={this.addToInput} value={'4'}/>
-                        <CalculatorKey handleClick={this.addToInput} value={'5'}/>
-                        <CalculatorKey handleClick={this.addToInput} value={'6'}/>
-                        <CalculatorKey handleClick={this.addToInput} value={'1'}/>
-                        <CalculatorKey handleClick={this.addToInput} value={'2'}/>
-                        <CalculatorKey handleClick={this.addToInput} value={'3'}/>
-                        <CalculatorKey handleClick={this.addToInput} value={'0'}/>
-                        <CalculatorKey handleClick={this.addToInput} value={'.'}/>
-                        <CalculatorKey handleClick={this.addToInput} value={'C'}/>
-                        <CalculatorKey handleClick={this.addToInput} value={'SAVE'}/>
+                        <CalculatorKey handleClick={this.handleInput} value={'7'}/>
+                        <CalculatorKey handleClick={this.handleInput} value={'8'}/>
+                        <CalculatorKey handleClick={this.handleInput} value={'9'}/>
+                        <CalculatorKey handleClick={this.handleInput} value={'4'}/>
+                        <CalculatorKey handleClick={this.handleInput} value={'5'}/>
+                        <CalculatorKey handleClick={this.handleInput} value={'6'}/>
+                        <CalculatorKey handleClick={this.handleInput} value={'1'}/>
+                        <CalculatorKey handleClick={this.handleInput} value={'2'}/>
+                        <CalculatorKey handleClick={this.handleInput} value={'3'}/>
+                        <CalculatorKey handleClick={this.handleInput} value={'0'}/>
+                        <CalculatorKey handleClick={this.handleInput} value={'.'}/>
+                        <CalculatorKey handleClick={this.handleInput} value={'C'}/>
+                        <CalculatorKey handleClick={this.handleInput} value={'SAVE'}/>
                         <CalculatorKey class={style.keyEqual} handleClick={this.evaluate} value={'='}/>
                     </div>
                 </div>
