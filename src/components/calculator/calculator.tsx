@@ -57,27 +57,29 @@ class Calculator extends React.Component<any, CalculatorState> {
             );
         }
 
-        this.updateUpperDisplay();
+        this.updateDisplays();
     };
 
 
     evaluate = () => {
         if (this.state.calculator.operator !== '' && this.state.calculator.n1 !== '' && this.state.calculator.n2 !== '') {
+            this.runCalculation().then(result => {
+                console.log(result);
+            this.updateDisplays(true, result);
+            });
 
-            this.updateUpperDisplay(true);
         }
     };
 
-    updateUpperDisplay = (evaluating?: boolean) => {
-
-        
+    updateDisplays = (evaluating?: boolean, result?: number) => {
 
         this.setState(state => (
             {
                 ...state,
                 calculator: {
                     ...state.calculator,
-                    upperDisplay: state.calculator.n1 + state.calculator.operator + state.calculator.n2 + (evaluating ? '=' : '')
+                    upperDisplay: state.calculator.n1 + state.calculator.operator + state.calculator.n2 + (evaluating ? '=' : ''),
+                    display: result ? result.toString() : '0'
                 }
             })
         )
@@ -98,33 +100,32 @@ class Calculator extends React.Component<any, CalculatorState> {
         )
     };
 
-    gatherData = (dataString: string): Promise<any> => {
+    runCalculation = (): Promise<any> => {
+        console.log('runCalculation');
+
         return new Promise((resolve, reject) => {
+            let result = 0;
             try {
-                let parsedData: {
-                    numbers: number[],
-                    operator: string[]
-                } = {
-                    numbers: [],
-                    operator: []
-                };
-                // filter operators
-                parsedData.operator = dataString.split('').filter(x => isNaN(+x));
-
-                // filter numbers
-                parsedData.numbers =
-                    dataString
-                        .replace(/[^0-9]/g, ' ')
-                        .split(' ')
-                        .map(x => parseInt(x));
-
-                resolve(parsedData);
+                switch (this.state.calculator.operator) {
+                    case "+":
+                        result = +this.state.calculator.n1 + +this.state.calculator.n2;
+                        break;
+                    case "-":
+                        result = +this.state.calculator.n1 - +this.state.calculator.n2;
+                        break;
+                    case "x":
+                        result = +this.state.calculator.n1 * +this.state.calculator.n2;
+                        break;
+                    case "÷":
+                        result = +this.state.calculator.n1 / +this.state.calculator.n2;
+                        break;
+                }
+                resolve(result);
             } catch (err) {
                 reject(err);
             }
         })
     };
-
 
 
     render() {
