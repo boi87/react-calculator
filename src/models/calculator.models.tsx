@@ -1,7 +1,9 @@
 export interface CalculatorState {
     calculator: {
         upperDisplay: string,
-        display: string
+        display: string,
+        n1: string,
+        n2: string,
         operator: string
     },
     saving: boolean
