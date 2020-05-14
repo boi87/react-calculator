@@ -57,16 +57,27 @@ class Calculator extends React.Component<any, CalculatorState> {
             );
         }
 
-        this.updateUpperDisplay()
+        this.updateUpperDisplay();
     };
 
-    updateUpperDisplay = () => {
+
+    evaluate = () => {
+        if (this.state.calculator.operator !== '' && this.state.calculator.n1 !== '' && this.state.calculator.n2 !== '') {
+
+            this.updateUpperDisplay(true);
+        }
+    };
+
+    updateUpperDisplay = (evaluating?: boolean) => {
+
+        
+
         this.setState(state => (
             {
                 ...state,
                 calculator: {
                     ...state.calculator,
-                    upperDisplay: state.calculator.n1 + state.calculator.operator + state.calculator.n2
+                    upperDisplay: state.calculator.n1 + state.calculator.operator + state.calculator.n2 + (evaluating ? '=' : '')
                 }
             })
         )
@@ -114,9 +125,6 @@ class Calculator extends React.Component<any, CalculatorState> {
         })
     };
 
-    evaluate = () => {
-
-    };
 
 
     render() {
