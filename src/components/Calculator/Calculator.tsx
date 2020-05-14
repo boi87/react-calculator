@@ -2,7 +2,7 @@ import React from "react";
 
 import style from './calculator.module.sass';
 import {CalculatorState} from "../../models/calculator.models";
-import CalculatorKey from "../buttons/calculatorKey/calculatorKey";
+import CalculatorKey from "../calculatorKey/calculatorKey";
 
 
 class Calculator extends React.Component<any, CalculatorState> {
@@ -82,7 +82,7 @@ class Calculator extends React.Component<any, CalculatorState> {
                             calculator: {
                                 ...state.calculator,
                                 n1: this.state.calculator.prevResult ? this.state.calculator.prevResult : this.state.calculator.n1,
-                                n2: '',
+                                n2: this.state.calculator.prevResult ? '' : this.state.calculator.n2,
                                 operator: (input.displayValue || input.value),
                                 result: this.state.calculator.prevResult ? this.state.calculator.prevResult : ''
                             },

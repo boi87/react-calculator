@@ -1,6 +1,6 @@
 import React from "react";
 
-import {CalculatorKeyProps} from "../../../models/calculator.models";
+import {CalculatorKeyProps} from "../../models/calculator.models";
 
 const CalculatorKey = (props: CalculatorKeyProps) => {
     return (

@@ -1,7 +1,7 @@
 import React from "react";
 
 import style from './container.module.sass';
-import Calculator from "../../components/calculator/calculator";
+import Calculator from "../../components/Calculator/Calculator";
 
 const Container = () => {
     return (
