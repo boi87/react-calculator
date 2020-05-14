@@ -16,7 +16,7 @@ class Calculator extends React.Component<any, CalculatorState> {
         saving: false
     };
 
-    addToInput = (input: string) => {
+    addToInput = (input: {value: string, displayValue: string | undefined}) => {
         console.log(this.state);
         this.setState(state => (
             {
@@ -51,7 +51,7 @@ class Calculator extends React.Component<any, CalculatorState> {
                         <CalculatorKey class={style.keyOperator} handleClick={this.addToInput} value={'-'}
                                        displayValue={'-'}/>
                         <CalculatorKey class={style.keyOperator} handleClick={this.addToInput} value={'*'}
-                                       displayValue={'x'}/>
+                        displayValue={'x'}/>
                         <CalculatorKey class={style.keyOperator} handleClick={this.addToInput} value={'/'}
                                        displayValue={'÷'}/>
                         <CalculatorKey handleClick={this.addToInput} value={'7'}/>

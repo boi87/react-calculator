@@ -8,7 +8,7 @@ export interface CalculatorState {
 }
 
 export interface CalculatorKeyProps {
-    handleClick: (value: string) => void,
+    handleClick: (input: { value: string; displayValue: string | undefined; }) => void,
     value: string
     displayValue?: string
     class?: string,

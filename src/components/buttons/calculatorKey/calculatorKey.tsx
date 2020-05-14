@@ -6,7 +6,7 @@ const CalculatorKey = (props: CalculatorKeyProps) => {
     return (
         <button
             className={props.class}
-            onClick={() => props.handleClick(props.value)}>
+            onClick={() => props.handleClick({value: props.value, displayValue: props.displayValue})}>
             {props.displayValue || props.value}
         </button>
     )
