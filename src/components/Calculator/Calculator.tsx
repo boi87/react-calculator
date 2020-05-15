@@ -48,35 +48,35 @@ class Calculator extends React.Component<any, ICalculatorState> {
             }, () => {
                 if (!isNaN(+input.value) || input.value === '.') {
                     if (this.state.calculator.operator === '') {
-                        console.log('setting number 1');
-                        this.setState(state => (
-                            {
-                                ...state,
-                                calculator: {
-                                    ...state.calculator,
-                                    n1: this.state.calculator.n1 + input.value,
-                                    n2: '',
-                                    result: '',
-                                    operator: '',
-                                    prevResult: ''
-                                },
-                            })
-                        );
+                        if (!isNaN(+input.value) || (input.value === '.' && !this.state.calculator.n1.includes('.'))) {
+                            this.setState(state => ({
+                                    ...state,
+                                    calculator: {
+                                        ...state.calculator,
+                                        n1: this.state.calculator.n1 + input.value,
+                                        n2: '',
+                                        result: '',
+                                        operator: '',
+                                        prevResult: ''
+                                    }
+                                })
+                            )
+                        }
                     } else {
-                        console.log('setting number 2');
-                        this.setState(state => (
-                            {
-                                ...state,
-                                calculator: {
-                                    ...state.calculator,
-                                    n2: state.calculator.n2 + input.value,
-                                    result: this.state.calculator.prevResult ? this.state.calculator.prevResult : '',
-                                },
-                            })
-                        )
+                        if (!isNaN(+input.value) || (input.value === '.' && !this.state.calculator.n2.includes('.'))) {
+                            this.setState(state => (
+                                {
+                                    ...state,
+                                    calculator: {
+                                        ...state.calculator,
+                                        n2: state.calculator.n2 + input.value,
+                                        result: this.state.calculator.prevResult ? this.state.calculator.prevResult : '',
+                                    },
+                                })
+                            )
+                        }
                     }
                 } else {
-                    console.log('setting operator');
                     this.setState(state => (
                         {
                             ...state,
