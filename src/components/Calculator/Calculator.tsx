@@ -179,7 +179,11 @@ class Calculator extends React.Component<any, ICalculatorState> {
                 }).then(csv => {
                     // axios
                     console.log(csv);
-                    axios.post('http://localhost/calculations.php', JSON.stringify(csv))
+                    axios
+                        .post(
+                            'http://localhost/calculations.php',
+                            JSON.stringify(csv),
+                            {'headers': 'Access-Control-Allow-Origin: *'})
                         .then(data => console.log(data))
                         .catch(err => console.log(err));
                 })
