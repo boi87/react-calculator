@@ -19,7 +19,8 @@ class Calculator extends React.Component<any, ICalculatorState> {
             display: '0',
         },
         evaluating: false,
-        saving: false
+        saving: false,
+        results: []
     };
 
 
@@ -111,9 +112,21 @@ class Calculator extends React.Component<any, ICalculatorState> {
         }
     };
 
+    getIpAddress = () => {
+
+    }
+
     handleSave = () => {
         // PHP part
-        console.log('php');
+
+        this.setState(state => {
+            return {
+                ...state,
+                results: [...state.results, this.state.calculator.result]
+            }
+        });
+
+        console.log('this.state', this.state.results);
     };
 
     updateDisplays = () => {
