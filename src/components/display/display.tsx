@@ -6,23 +6,22 @@ import style from './display.module.sass';
 
 const Display = (props: IDisplayProps) => {
 
-    const upperDisplay: string[] = [];
+    const formatNumbers = (num: string) => num.replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, '$1,');
 
-    const numbers = props.upperDisplay.replace(/[^0-9.]/g, ' ')
-        .split(' ')
-        .filter(x => !isNaN(+x));
-
+    const numbers = props.upperDisplay.replace(/[^0-9.]/g, ' ').split(' ').filter(x => !isNaN(+x));
     const operators = props.upperDisplay.split('').filter(x => isNaN(+x) && x !== '.');
 
-    numbers.map((num, i) => (upperDisplay.push(num, operators[i])));
+    const mainDisplay = formatNumbers(props.mainDisplay);
 
-    const mainDisplay = Number(props.mainDisplay).toLocaleString();
+    const upperDisplay: string[] = [];
+    numbers.map((num, i) => upperDisplay.push(formatNumbers(num), operators[i]));
+
     return (
         <div style={{display: "flex", flexDirection: "column"}}>
             <div className={style.upperDisplay}>
                 {upperDisplay.join(' ')}
             </div>
-            <div className={style.mainDisplay}>{mainDisplay.length > 10 ? 'err' : mainDisplay}</div>
+            <div className={style.mainDisplay}>{mainDisplay.length > 13 ? 'it\'s too long!' : mainDisplay}</div>
 
         </div>
     )
