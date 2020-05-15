@@ -1,4 +1,6 @@
 import React from "react";
+// const axios = require('axios').default;
+import axios from 'axios';
 
 import style from './calculator.module.sass';
 import {ICalculatorState} from "../../models/calculator.models";
@@ -157,20 +159,31 @@ class Calculator extends React.Component<any, ICalculatorState> {
         // PHP part
         // this.getIpAddress().then(ip => console.log(ip));
 
-        Promise.all([this.getIpAddress(), this.getBrowser(), this.getTime()])
-            .then(promises => {
-            console.log(promises);
-
-        });
 
         console.log('appVersion', window.navigator.userAgent);
 
         this.setState(state => {
-            return {
-                ...state,
-                results: [...state.results, this.state.calculator.result]
-            }
-        });
+                return {
+                    ...state,
+                    results: [...state.results, this.state.calculator.result]
+                }
+            }, () => Promise.all([this.getIpAddress(), this.getBrowser(), this.getTime()])
+                .then(promises => {
+                    const dataToCsv = {
+                        ipAddress: promises[0],
+                        browser: promises[1],
+                        date: promises[2],
+                        results: [...this.state.results]
+                    };
+                    return dataToCsv;
+                }).then(csv => {
+                    // axios
+                    console.log(csv);
+                    axios.post('http://localhost/calculations.php', JSON.stringify(csv))
+                        .then(data => console.log(data))
+                        .catch(err => console.log(err));
+                })
+        );
 
         console.log('this.state', this.state.results);
     };
