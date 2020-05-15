@@ -112,12 +112,58 @@ class Calculator extends React.Component<any, ICalculatorState> {
         }
     };
 
-    getIpAddress = () => {
+    getIpAddress = (): Promise<string> => {
+        return new Promise((resolve, reject) => {
+            try {
+                fetch('https://api.ipify.org?format=jsonp?callback=?', {
+                    method: 'GET',
+                    headers: {},
+                }).then(res => {
+                    resolve(res.text());
+                })
+            } catch (err) {
+                reject(err);
+            }
+        })
+    };
 
-    }
+    getBrowser = (): Promise<string> => {
+        let currentBrowser = 'Not known';
+
+        if (window.navigator.userAgent.indexOf('Chrome') !== -1) {
+            currentBrowser = 'Google Chrome';
+        } else if (window.navigator.userAgent.indexOf('Firefox') !== -1) {
+            currentBrowser = 'Mozilla Firefox';
+        } else if (window.navigator.userAgent.indexOf('MSIE') !== -1) {
+            currentBrowser = 'Internet Exployer';
+        } else if (window.navigator.userAgent.indexOf('Edge') !== -1) {
+            currentBrowser = 'Edge';
+        } else if (window.navigator.userAgent.indexOf('Safari') !== -1) {
+            currentBrowser = 'Safari';
+        } else if (window.navigator.userAgent.indexOf('Opera') !== -1) {
+            currentBrowser = 'Opera';
+        } else if (window.navigator.userAgent.indexOf('Opera') !== -1) {
+            currentBrowser = 'YaBrowser';
+        } else {
+            console.log('Others');
+        }
+
+        return new Promise(resolve => resolve(currentBrowser));
+    };
+
+    getTime = (): Promise<string> => new Promise(resolve => resolve(new Date().toLocaleString()));
 
     handleSave = () => {
         // PHP part
+        // this.getIpAddress().then(ip => console.log(ip));
+
+        Promise.all([this.getIpAddress(), this.getBrowser(), this.getTime()])
+            .then(promises => {
+            console.log(promises);
+
+        });
+
+        console.log('appVersion', window.navigator.userAgent);
 
         this.setState(state => {
             return {
