@@ -19,9 +19,7 @@ class Calculator extends React.Component<any, ICalculatorState> {
             upperDisplay: ' ',
             display: '0',
         },
-        evaluating: false,
-        saving: false,
-        results: []
+        evaluating: false
     };
 
 
@@ -129,31 +127,6 @@ class Calculator extends React.Component<any, ICalculatorState> {
     };
 
     handleSave = () => {
-        // this.setState(state => {
-        //         return {
-        //             ...state,
-        //             results: [...state.results, this.state.calculator.result]
-        //         }
-        //     }, () => Promise.all([this.getIpAddress(), this.getBrowser(), this.getTime()])
-        //         .then(promises => {
-        //             const dataToCsv = {
-        //                 ipAddress: promises[0],
-        //                 browser: promises[1],
-        //                 date: promises[2],
-        //                 results: [...this.state.results]
-        //             };
-        //             return dataToCsv;
-        //         }).then(csv => {
-        //             console.log(csv);
-        //             axios
-        //                 .post(
-        //                     'http://localhost/calculations.php',
-        //                     csv,
-        //                 )
-        //                 .then(data => console.log(data))
-        //                 .catch(err => console.log(err));
-        //         })
-        // );
         this.getIpAddress().then(ip => {
                 const dataToExport = {result: this.state.calculator.result, ipFromJs: ip};
                 axios.post('http://localhost/calculations.php', JSON.stringify(dataToExport))
@@ -180,17 +153,17 @@ class Calculator extends React.Component<any, ICalculatorState> {
     };
 
     handleCancel = () => {
-        this.setState(state => (
+        this.setState(() => (
             {
-                ...state,
+                evaluating: false,
                 calculator: {
-                    upperDisplay: '',
-                    display: '0',
-                    operator: '',
                     n1: '',
                     n2: '',
+                    operator: '',
                     result: '',
-                    prevResult: ''
+                    prevResult: '',
+                    upperDisplay: ' ',
+                    display: '0',
                 }
             })
         )

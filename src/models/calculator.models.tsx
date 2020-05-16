@@ -9,8 +9,6 @@ export interface ICalculatorState {
         prevResult: string
     },
     evaluating: boolean
-    saving: boolean
-    results: string[]
 }
 
 export interface IDisplayProps {
