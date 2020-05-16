@@ -1,17 +1,16 @@
 .calculatorKeys
-  background-color: #999
+  background-color: #fabd71
   display: grid
-  grid-gap: 1px
   grid-template-columns: repeat(4, 1fr)
+  grid-row-gap: 2px
 
 
 .calculatorKeys > *
-  background-color: #fff
+  background-color: #ff842c
   padding: 0.5em 1.25em
   position: relative
   text-align: center
   font-family: 'Jost', sans-serif
-
 
 .calculatorKeys > *:active::before,
 .calculatorKeys > .is-depressed::before
@@ -30,14 +29,18 @@
 
 
 .keyOperator
-  background-color: #eee
+  background-color: #fabd71
   font-weight: normal
   font-family: 'Jost', sans-serif
 
 
 .keyEqual
-  background-image: linear-gradient(to bottom, #fe886a, #ff7033)
+  background-color: #fe9b37
   grid-column: -2
   grid-row: 2 / span 3
   font-family: 'Jost', sans-serif
 
+
+.keySave
+  background-color: #fe9b37
+  font-family: 'Jost', sans-serif

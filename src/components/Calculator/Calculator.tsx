@@ -1,5 +1,4 @@
 import React from "react";
-// const axios = require('axios').default;
 import axios from 'axios';
 
 import style from './calculator.module.sass';
@@ -28,7 +27,7 @@ class Calculator extends React.Component<any, ICalculatorState> {
 
     handleInput = (input: { value: string, displayValue: string | undefined }) => {
 
-        if (input.value === 'C') {
+        if (input.value === 'AC') {
             return this.handleCancel();
         }
 
@@ -156,40 +155,39 @@ class Calculator extends React.Component<any, ICalculatorState> {
     getTime = (): Promise<string> => new Promise(resolve => resolve(new Date().toLocaleString()));
 
     handleSave = () => {
-        // PHP part
-        // this.getIpAddress().then(ip => console.log(ip));
-
-
-        console.log('appVersion', window.navigator.userAgent);
-
-        this.setState(state => {
-                return {
-                    ...state,
-                    results: [...state.results, this.state.calculator.result]
-                }
-            }, () => Promise.all([this.getIpAddress(), this.getBrowser(), this.getTime()])
-                .then(promises => {
-                    const dataToCsv = {
-                        ipAddress: promises[0],
-                        browser: promises[1],
-                        date: promises[2],
-                        results: [...this.state.results]
-                    };
-                    return dataToCsv;
-                }).then(csv => {
-                    // axios
-                    console.log(csv);
-                    axios
-                        .post(
-                            'http://localhost/calculations.php',
-                            JSON.stringify(csv),
-                            {'headers': 'Access-Control-Allow-Origin: *'})
-                        .then(data => console.log(data))
-                        .catch(err => console.log(err));
-                })
-        );
-
-        console.log('this.state', this.state.results);
+        // this.setState(state => {
+        //         return {
+        //             ...state,
+        //             results: [...state.results, this.state.calculator.result]
+        //         }
+        //     }, () => Promise.all([this.getIpAddress(), this.getBrowser(), this.getTime()])
+        //         .then(promises => {
+        //             const dataToCsv = {
+        //                 ipAddress: promises[0],
+        //                 browser: promises[1],
+        //                 date: promises[2],
+        //                 results: [...this.state.results]
+        //             };
+        //             return dataToCsv;
+        //         }).then(csv => {
+        //             console.log(csv);
+        //             axios
+        //                 .post(
+        //                     'http://localhost/calculations.php',
+        //                     csv,
+        //                 )
+        //                 .then(data => console.log(data))
+        //                 .catch(err => console.log(err));
+        //         })
+        // );
+        this.getIpAddress().then(ip => {
+                const dataToExport = {result: this.state.calculator.result, ipFromJs: ip};
+                axios.post('http://localhost/calculations.php', JSON.stringify(dataToExport))
+                    .then(res => {
+                        console.log(res);
+                    })
+            }
+        )
     };
 
     updateDisplays = () => {
@@ -259,7 +257,9 @@ class Calculator extends React.Component<any, ICalculatorState> {
                     <KeyPad
                         onInputEvent={this.handleInput}
                         onEvaluateEvent={this.handleEvaluate}
-                        onSaveEvent={this.handleSave}/>
+                        onSaveEvent={this.handleSave}
+                        currentResult={this.state.calculator.result}
+                    />
                 </div>
             </div>
         )

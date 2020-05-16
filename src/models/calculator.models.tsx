@@ -22,6 +22,7 @@ export interface IKeyPadProps {
     onInputEvent: (input: { value: string; displayValue: string | undefined; }) => void,
     onEvaluateEvent: () => void
     onSaveEvent: () => void
+    currentResult?: string
 }
 
 export interface ICalculatorKeyProps {
@@ -29,4 +30,5 @@ export interface ICalculatorKeyProps {
     value: string
     displayValue?: string
     class?: string,
+    currentResult?: string
 }

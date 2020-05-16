@@ -36,8 +36,12 @@ const KeyPad = (props: IKeyPadProps) => {
             <CalculatorKey class={style.calculatorKeys} handleClick={props.onInputEvent} value={'3'}/>
             <CalculatorKey class={style.calculatorKeys} handleClick={props.onInputEvent} value={'0'}/>
             <CalculatorKey class={style.calculatorKeys} handleClick={props.onInputEvent} value={'.'}/>
-            <CalculatorKey class={style.calculatorKeys} handleClick={props.onInputEvent} value={'C'}/>
-            <CalculatorKey class={style.calculatorKeys} handleClick={props.onSaveEvent} value={'SAVE'}/>
+            <CalculatorKey class={style.calculatorKeys} handleClick={props.onInputEvent} value={'AC'}/>
+            <CalculatorKey
+                class={style.keySave}
+                handleClick={props.onSaveEvent}
+                value={'SAVE'}
+                currentResult={props.currentResult}/>
             <CalculatorKey
                 class={style.keyEqual}
                 handleClick={props.onEvaluateEvent}

@@ -6,10 +6,12 @@ import style from './display.module.sass';
 
 const Display = (props: IDisplayProps) => {
 
-    const formatNumbers = (num: string) => num.replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, '$1,');
+    const thousandsSeparatorRgx = /(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g;
+    const formatNumbers = (num: string) => num.replace(thousandsSeparatorRgx, '$1,');
 
-    const numbers = props.upperDisplay.replace(/[^0-9.]/g, ' ').split(' ').filter(x => !isNaN(+x));
-    const operators = props.upperDisplay.split('').filter(x => isNaN(+x) && x !== '.');
+    const numsAndDecimalDotRgx = /[^0-9.]/g;
+    const numbers = props.upperDisplay.replace(numsAndDecimalDotRgx, ' ').split(' ').filter(num => !isNaN(+num));
+    const operators = props.upperDisplay.split('').filter(op => isNaN(+op) && op !== '.');
 
     const mainDisplay = formatNumbers(props.mainDisplay);
 
@@ -25,6 +27,6 @@ const Display = (props: IDisplayProps) => {
 
         </div>
     )
-}
+};
 
 export default Display;
