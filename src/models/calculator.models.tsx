@@ -9,18 +9,20 @@ export interface ICalculatorState {
         prevResult: string
     },
     evaluating: boolean
+    saved: boolean
 }
 
 export interface IDisplayProps {
     upperDisplay: string
     mainDisplay: string
+    saved?: boolean
 }
 
 export interface IKeyPadProps {
     onInputEvent: (input: { value: string; displayValue: string | undefined; }) => void,
     onEvaluateEvent: () => void
     onSaveEvent: () => void
-    currentResult?: string
+    currentResult?: string,
 }
 
 export interface ICalculatorKeyProps {

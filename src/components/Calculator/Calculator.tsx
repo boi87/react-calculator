@@ -19,7 +19,8 @@ class Calculator extends React.Component<any, ICalculatorState> {
             upperDisplay: ' ',
             display: '0',
         },
-        evaluating: false
+        evaluating: false,
+        saved: false
     };
 
 
@@ -34,6 +35,7 @@ class Calculator extends React.Component<any, ICalculatorState> {
                     return {
                         ...state,
                         evaluating: false,
+                        saved: false,
                         calculator: {
                             ...state.calculator,
                             operator: '',
@@ -128,17 +130,21 @@ class Calculator extends React.Component<any, ICalculatorState> {
 
     handleSave = () => {
         this.getIpAddress().then(ip => {
-                const dataToExport = {result: this.state.calculator.result, ipFromJs: ip};
-                axios.post('http://localhost/calculations.php', JSON.stringify(dataToExport))
+            const dataToExport = new URLSearchParams();
+            dataToExport.append('result', this.state.calculator.result);
+            dataToExport.append('ipFromJs', ip);
+                axios.post('http://localhost/calculations.php', dataToExport)
                     .then(res => {
-                        console.log(res);
+                        if (res.statusText === 'OK') {
+                            this.setState(state => ({...state, saved: true}));
+                            setTimeout(() => this.setState(state => ({...state, saved: false})), 500)
+                        }
                     })
             }
         )
     };
 
     updateDisplays = () => {
-
         this.setState(state => (
             {
                 ...state,
@@ -200,7 +206,8 @@ class Calculator extends React.Component<any, ICalculatorState> {
             <div>
                 <div className={style.calculator}>
                     <Display upperDisplay={this.state.calculator.upperDisplay}
-                             mainDisplay={this.state.calculator.display}/>
+                             mainDisplay={this.state.calculator.display}
+                             saved={this.state.saved}/>
                     <KeyPad
                         onInputEvent={this.handleInput}
                         onEvaluateEvent={this.handleEvaluate}
