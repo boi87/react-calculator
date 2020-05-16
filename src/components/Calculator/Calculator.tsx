@@ -17,7 +17,7 @@ class Calculator extends React.Component<any, ICalculatorState> {
             result: '',
             prevResult: '',
             upperDisplay: ' ',
-            display: '0',
+            mainDisplay: '0',
         },
         evaluating: false,
         saved: false
@@ -149,7 +149,7 @@ class Calculator extends React.Component<any, ICalculatorState> {
                 calculator: {
                     ...state.calculator,
                     upperDisplay: state.calculator.n1 + state.calculator.operator + state.calculator.n2 + (this.state.evaluating ? '=' : ''),
-                    display: this.state.calculator.result.toString() || state.calculator.prevResult.toString() || '0'
+                    mainDisplay: this.state.calculator.result.toString() || state.calculator.prevResult.toString() || '0'
                 }
             })
         )
@@ -166,7 +166,7 @@ class Calculator extends React.Component<any, ICalculatorState> {
                     result: '',
                     prevResult: '',
                     upperDisplay: ' ',
-                    display: '0',
+                    mainDisplay: '0',
                 }
             })
         )
@@ -203,7 +203,7 @@ class Calculator extends React.Component<any, ICalculatorState> {
             <div>
                 <div className={style.calculator}>
                     <Display upperDisplay={this.state.calculator.upperDisplay}
-                             mainDisplay={this.state.calculator.display}
+                             mainDisplay={this.state.calculator.mainDisplay}
                              saved={this.state.saved}/>
                     <KeyPad
                         onInputEvent={this.handleInput}

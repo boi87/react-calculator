@@ -1,7 +1,7 @@
 export interface ICalculatorState {
     calculator: {
         upperDisplay: string,
-        display: string,
+        mainDisplay: string,
         n1: string,
         n2: string,
         operator: string
