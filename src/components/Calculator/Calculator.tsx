@@ -35,12 +35,11 @@ class Calculator extends React.Component<any, ICalculatorState> {
                     return {
                         ...state,
                         evaluating: false,
-                        saved: false,
                         calculator: {
                             ...state.calculator,
                             operator: '',
                             result: '',
-                            n1: ''
+                            n1: '',
                         }
                     }
                 }
@@ -87,14 +86,14 @@ class Calculator extends React.Component<any, ICalculatorState> {
                                 n1: this.state.calculator.prevResult ? this.state.calculator.prevResult : this.state.calculator.n1,
                                 n2: this.state.calculator.prevResult ? '' : this.state.calculator.n2,
                                 operator: (input.displayValue || input.value),
-                                result: this.state.calculator.prevResult ? this.state.calculator.prevResult : ''
+                                result: ''
                             },
                             evaluating: false
                         })
                     );
                 }
                 this.updateDisplays();
-            }
+            },
         );
 
     };
@@ -102,11 +101,10 @@ class Calculator extends React.Component<any, ICalculatorState> {
 
     handleEvaluate = () => {
         if (this.state.calculator.operator !== '' && this.state.calculator.n1 !== '' && this.state.calculator.n2 !== '') {
-
             this.setState(state => ({...state, evaluating: true}));
 
             this.runCalculation().then(result => {
-                this.setState(state => ({...state, calculator: {...state.calculator, result: result}}));
+                this.setState(state => ({...state, calculator: {...state.calculator, result: result, prevResult: result}}));
                 this.updateDisplays();
             });
 
@@ -151,8 +149,7 @@ class Calculator extends React.Component<any, ICalculatorState> {
                 calculator: {
                     ...state.calculator,
                     upperDisplay: state.calculator.n1 + state.calculator.operator + state.calculator.n2 + (this.state.evaluating ? '=' : ''),
-                    prevResult: this.state.calculator.result ? this.state.calculator.result.toString() : '',
-                    display: this.state.calculator.result !== '' ? this.state.calculator.result.toString() : state.calculator.prevResult ? state.calculator.prevResult : '0'
+                    display: this.state.calculator.result.toString() || state.calculator.prevResult.toString() || '0'
                 }
             })
         )
