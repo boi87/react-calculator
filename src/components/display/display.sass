@@ -1,11 +1,8 @@
-$displayCharcoal: #222222
-$calculatorJost: 'Jost', sans-serif
-$upperDispFontColor: #999
-$mainDispFontColor: #fff
+@import "./sass/colors"
+@import "./sass/flex"
 
 .displaysContainer
-  display: flex
-  flex-direction: column
+  @include flexColumnCenter
 
 .upperDisplay
   background-color: $displayCharcoal
@@ -30,7 +27,7 @@ $mainDispFontColor: #fff
 .successMessage
   position: fixed
   background-color: $displayCharcoal
-  color: lime
+  color: $successMsgColor
   font-size: initial
   align-self: center
   margin-top: 76px
