@@ -1,11 +1,12 @@
 import React from "react";
 import axios from 'axios';
 
-import style from './calculator.module.sass';
-import {ICalculatorState} from "../../models/calculator.models";
 import KeyPad from "../keypad/keyPad";
 import Display from "../display/display";
 
+import {ICalculatorState} from "../../models/calculator.models";
+
+import './calculator.sass';
 
 class Calculator extends React.Component<any, ICalculatorState> {
 
@@ -217,7 +218,7 @@ class Calculator extends React.Component<any, ICalculatorState> {
     render() {
         return (
             <div>
-                <div className={style.calculator}>
+                <div className={'calculator'}>
                     <Display upperDisplay={this.state.calculator.upperDisplay}
                              mainDisplay={this.state.calculator.mainDisplay}
                              saved={this.state.saved}/>

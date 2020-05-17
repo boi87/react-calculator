@@ -1,7 +1,7 @@
 import React from "react";
 import {IDisplayProps} from "../../models/calculator.models";
 
-import style from './display.module.sass';
+import './display.sass';
 
 
 const Display = (props: IDisplayProps) => {
@@ -19,15 +19,15 @@ const Display = (props: IDisplayProps) => {
     numbers.map((num, i) => upperDisplay.push(formatNumbers(num), operators[i]));
 
     return (
-        <div className={style.displaysContainer}>
-            <div className={style.upperDisplay}>
+        <div className={'displaysContainer'}>
+            <div className={'upperDisplay'}>
                 {upperDisplay.join(' ')}
             </div>
-            <div className={style.mainDisplay}>
+            <div className={'mainDisplay'}>
                 {mainDisplay}
             </div>
                 {props.saved ?
-                    <div className={style.successMessage}>SAVED!</div>
+                    <div className={'successMessage'}>SAVED!</div>
                     : null
                 }
         </div>
