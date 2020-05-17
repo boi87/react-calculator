@@ -19,12 +19,12 @@ class Calculator extends React.Component<any, ICalculatorState> {
             upperDisplay: ' ',
             mainDisplay: '0',
         },
-        showEqual: true,
+        showEqual: false,
         saved: false
     };
 
     setNumberOne = (input: { value: string, displayValue: string | undefined }) => {
-        if (!isNaN(+input.value) || (input.value === '.' && !this.state.calculator.n1.includes('.'))) {
+        if (!isNaN(+input.value) || (input.value === '.' && !this.state.calculator.n1.toString().includes('.'))) {
             return this.setState(state => ({
                     ...state,
                     calculator: {
@@ -41,7 +41,7 @@ class Calculator extends React.Component<any, ICalculatorState> {
     };
 
     setNumberTwo = (input: { value: string, displayValue: string | undefined }) => {
-        if (!isNaN(+input.value) || (input.value === '.' && !this.state.calculator.n2.includes('.'))) {
+        if (!isNaN(+input.value) || (input.value === '.' && !this.state.calculator.n2.toString().includes('.'))) {
             return this.setState(state => (
                 {
                     ...state,
@@ -108,9 +108,8 @@ class Calculator extends React.Component<any, ICalculatorState> {
 
     };
 
-
     handleEvaluate = () => {
-        if (this.state.calculator.operator !== '' && this.state.calculator.n1 !== '' && this.state.calculator.n2 !== '') {
+        if (this.state.calculator.operator !== '') {
             this.setState(state => ({...state, showEqual: true}));
 
             this.runCalculation().then(result => {
@@ -144,19 +143,23 @@ class Calculator extends React.Component<any, ICalculatorState> {
     runCalculation = (): Promise<any> => {
         return new Promise((resolve, reject) => {
             let result = 0;
+
+            const numberOne = +this.state.calculator.n1 || 0;
+            const numberTwo = +this.state.calculator.n2 || 0;
+
             try {
                 switch (this.state.calculator.operator) {
                     case "+":
-                        result = +this.state.calculator.n1 + +this.state.calculator.n2;
+                        result = numberOne + numberTwo;
                         break;
                     case "-":
-                        result = +this.state.calculator.n1 - +this.state.calculator.n2;
+                        result = numberOne - numberTwo;
                         break;
                     case "x":
-                        result = +this.state.calculator.n1 * +this.state.calculator.n2;
+                        result = numberOne * numberTwo;
                         break;
                     case "÷":
-                        result = +this.state.calculator.n1 / +this.state.calculator.n2;
+                        result = numberOne / numberTwo;
                         break;
                 }
                 resolve(result);

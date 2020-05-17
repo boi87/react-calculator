@@ -2,8 +2,8 @@ export interface ICalculatorState {
     calculator: {
         upperDisplay: string,
         mainDisplay: string,
-        n1: string,
-        n2: string,
+        n1: string | 0,
+        n2: string | 0,
         operator: string
         result: string
         prevResult: string
