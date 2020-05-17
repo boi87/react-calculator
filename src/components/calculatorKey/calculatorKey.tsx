@@ -2,12 +2,14 @@ import React from "react";
 
 import {ICalculatorKeyProps} from "../../models/calculator.models";
 
+import './calculatorKey.sass';
+
 const CalculatorKey = (props: ICalculatorKeyProps) => {
     return (
         <button
             color={'green'}
             disabled={props.currentResult === ''}
-            className={props.class}
+            className={props.class || 'standardKey'}
             onClick={() => props.handleClick({value: props.value, displayValue: props.displayValue})}>
             {props.displayValue || props.value}
         </button>
