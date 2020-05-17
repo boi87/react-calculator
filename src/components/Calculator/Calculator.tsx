@@ -23,6 +23,53 @@ class Calculator extends React.Component<any, ICalculatorState> {
         saved: false
     };
 
+    setNumberOne = (input: { value: string, displayValue: string | undefined }) => {
+        if (!isNaN(+input.value) || (input.value === '.' && !this.state.calculator.n1.includes('.'))) {
+            return this.setState(state => ({
+                    ...state,
+                    calculator: {
+                        ...state.calculator,
+                        n1: this.state.calculator.n1 + input.value,
+                        n2: '',
+                        result: '',
+                        operator: '',
+                        prevResult: ''
+                    }
+                })
+            )
+        }
+    };
+
+    setNumberTwo = (input: { value: string, displayValue: string | undefined }) => {
+        if (!isNaN(+input.value) || (input.value === '.' && !this.state.calculator.n2.includes('.'))) {
+            return this.setState(state => (
+                {
+                    ...state,
+                    calculator: {
+                        ...state.calculator,
+                        n2: state.calculator.n2 + input.value,
+                        result: this.state.calculator.prevResult ? this.state.calculator.prevResult : '',
+                    },
+                })
+            )
+        }
+    };
+
+    setOperator = (input: { value: string, displayValue: string | undefined }) => {
+        this.setState(state => (
+            {
+                ...state,
+                calculator: {
+                    ...state.calculator,
+                    n1: this.state.calculator.prevResult ? this.state.calculator.prevResult : this.state.calculator.n1,
+                    n2: this.state.calculator.prevResult ? '' : this.state.calculator.n2,
+                    operator: (input.displayValue || input.value),
+                    result: ''
+                },
+                evaluating: false
+            })
+        );
+    };
 
     handleInput = (input: { value: string, displayValue: string | undefined }) => {
 
@@ -49,48 +96,12 @@ class Calculator extends React.Component<any, ICalculatorState> {
             }, () => {
                 if (!isNaN(+input.value) || input.value === '.') {
                     if (this.state.calculator.operator === '') {
-                        if (!isNaN(+input.value) || (input.value === '.' && !this.state.calculator.n1.includes('.'))) {
-                            this.setState(state => ({
-                                    ...state,
-                                    calculator: {
-                                        ...state.calculator,
-                                        n1: this.state.calculator.n1 + input.value,
-                                        n2: '',
-                                        result: '',
-                                        operator: '',
-                                        prevResult: ''
-                                    }
-                                })
-                            )
-                        }
+                        this.setNumberOne(input);
                     } else {
-                        if (!isNaN(+input.value) || (input.value === '.' && !this.state.calculator.n2.includes('.'))) {
-                            this.setState(state => (
-                                {
-                                    ...state,
-                                    calculator: {
-                                        ...state.calculator,
-                                        n2: state.calculator.n2 + input.value,
-                                        result: this.state.calculator.prevResult ? this.state.calculator.prevResult : '',
-                                    },
-                                })
-                            )
-                        }
+                        this.setNumberTwo(input);
                     }
                 } else {
-                    this.setState(state => (
-                        {
-                            ...state,
-                            calculator: {
-                                ...state.calculator,
-                                n1: this.state.calculator.prevResult ? this.state.calculator.prevResult : this.state.calculator.n1,
-                                n2: this.state.calculator.prevResult ? '' : this.state.calculator.n2,
-                                operator: (input.displayValue || input.value),
-                                result: ''
-                            },
-                            evaluating: false
-                        })
-                    );
+                    this.setOperator(input);
                 }
                 this.updateDisplays();
             },
@@ -104,7 +115,10 @@ class Calculator extends React.Component<any, ICalculatorState> {
             this.setState(state => ({...state, evaluating: true}));
 
             this.runCalculation().then(result => {
-                this.setState(state => ({...state, calculator: {...state.calculator, result: result, prevResult: result}}));
+                this.setState(state => ({
+                    ...state,
+                    calculator: {...state.calculator, result: result, prevResult: result}
+                }));
                 this.updateDisplays();
             });
 
@@ -128,9 +142,9 @@ class Calculator extends React.Component<any, ICalculatorState> {
 
     handleSave = () => {
         this.getIpAddress().then(ip => {
-            const dataToExport = new URLSearchParams();
-            dataToExport.append('result', this.state.calculator.result);
-            dataToExport.append('ipFromJs', ip);
+                const dataToExport = new URLSearchParams();
+                dataToExport.append('result', this.state.calculator.result);
+                dataToExport.append('ipFromJs', ip);
                 axios.post('http://localhost/calculations.php', dataToExport)
                     .then(res => {
                         if (res.statusText === 'OK') {
