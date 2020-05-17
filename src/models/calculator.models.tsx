@@ -8,7 +8,7 @@ export interface ICalculatorState {
         result: string
         prevResult: string
     },
-    evaluating: boolean
+    showEqual: boolean
     saved: boolean
 }
 

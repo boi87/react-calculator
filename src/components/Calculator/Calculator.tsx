@@ -19,7 +19,7 @@ class Calculator extends React.Component<any, ICalculatorState> {
             upperDisplay: ' ',
             mainDisplay: '0',
         },
-        evaluating: false,
+        showEqual: true,
         saved: false
     };
 
@@ -48,7 +48,6 @@ class Calculator extends React.Component<any, ICalculatorState> {
                     calculator: {
                         ...state.calculator,
                         n2: state.calculator.n2 + input.value,
-                        result: this.state.calculator.prevResult ? this.state.calculator.prevResult : '',
                     },
                 })
             )
@@ -62,11 +61,10 @@ class Calculator extends React.Component<any, ICalculatorState> {
                 calculator: {
                     ...state.calculator,
                     n1: this.state.calculator.prevResult ? this.state.calculator.prevResult : this.state.calculator.n1,
-                    n2: this.state.calculator.prevResult ? '' : this.state.calculator.n2,
                     operator: (input.displayValue || input.value),
                     result: ''
                 },
-                evaluating: false
+                showEqual: false
             })
         );
     };
@@ -78,15 +76,16 @@ class Calculator extends React.Component<any, ICalculatorState> {
         }
 
         this.setState((state) => {
-                if (this.state.evaluating) {
+                if (this.state.showEqual) {
                     return {
                         ...state,
-                        evaluating: false,
+                        showEqual: false,
                         calculator: {
                             ...state.calculator,
                             operator: '',
                             result: '',
                             n1: '',
+                            n2: ''
                         }
                     }
                 }
@@ -112,7 +111,7 @@ class Calculator extends React.Component<any, ICalculatorState> {
 
     handleEvaluate = () => {
         if (this.state.calculator.operator !== '' && this.state.calculator.n1 !== '' && this.state.calculator.n2 !== '') {
-            this.setState(state => ({...state, evaluating: true}));
+            this.setState(state => ({...state, showEqual: true}));
 
             this.runCalculation().then(result => {
                 this.setState(state => ({
@@ -125,54 +124,10 @@ class Calculator extends React.Component<any, ICalculatorState> {
         }
     };
 
-    getIpAddress = (): Promise<string> => {
-        return new Promise((resolve, reject) => {
-            try {
-                fetch('https://api.ipify.org?format=jsonp?callback=?', {
-                    method: 'GET',
-                    headers: {},
-                }).then(res => {
-                    resolve(res.text());
-                })
-            } catch (err) {
-                reject(err);
-            }
-        })
-    };
-
-    handleSave = () => {
-        this.getIpAddress().then(ip => {
-                const dataToExport = new URLSearchParams();
-                dataToExport.append('result', this.state.calculator.result);
-                dataToExport.append('ipFromJs', ip);
-                axios.post('http://localhost/calculations.php', dataToExport)
-                    .then(res => {
-                        if (res.statusText === 'OK') {
-                            this.setState(state => ({...state, saved: true}));
-                            setTimeout(() => this.setState(state => ({...state, saved: false})), 500)
-                        }
-                    })
-            }
-        )
-    };
-
-    updateDisplays = () => {
-        this.setState(state => (
-            {
-                ...state,
-                calculator: {
-                    ...state.calculator,
-                    upperDisplay: state.calculator.n1 + state.calculator.operator + state.calculator.n2 + (this.state.evaluating ? '=' : ''),
-                    mainDisplay: this.state.calculator.result.toString() || state.calculator.prevResult.toString() || '0'
-                }
-            })
-        )
-    };
-
     handleCancel = () => {
         this.setState(() => (
             {
-                evaluating: false,
+                showEqual: false,
                 calculator: {
                     n1: '',
                     n2: '',
@@ -209,6 +164,50 @@ class Calculator extends React.Component<any, ICalculatorState> {
                 reject(err);
             }
         })
+    };
+
+    updateDisplays = () => {
+        this.setState(state => (
+            {
+                ...state,
+                calculator: {
+                    ...state.calculator,
+                    upperDisplay: state.calculator.n1 + state.calculator.operator + state.calculator.n2 + (this.state.showEqual ? '=' : ''),
+                    mainDisplay: this.state.calculator.result.toString() || state.calculator.prevResult.toString() || '0'
+                }
+            })
+        )
+    };
+
+    getIpAddress = (): Promise<string> => {
+        return new Promise((resolve, reject) => {
+            try {
+                fetch('https://api.ipify.org?format=jsonp?callback=?', {
+                    method: 'GET',
+                    headers: {},
+                }).then(res => {
+                    resolve(res.text());
+                })
+            } catch (err) {
+                reject(err);
+            }
+        })
+    };
+
+    handleSave = () => {
+        this.getIpAddress().then(ip => {
+                const dataToExport = new URLSearchParams();
+                dataToExport.append('result', this.state.calculator.result);
+                dataToExport.append('ipFromJs', ip);
+                axios.post('http://localhost/calculations.php', dataToExport)
+                    .then(res => {
+                        if (res.statusText === 'OK') {
+                            this.setState(state => ({...state, saved: true}));
+                            setTimeout(() => this.setState(state => ({...state, saved: false})), 500)
+                        }
+                    })
+            }
+        )
     };
 
 
