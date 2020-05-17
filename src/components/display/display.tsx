@@ -1,8 +1,8 @@
 import React from "react";
+
 import {IDisplayProps} from "../../models/calculator.models";
 
 import './display.sass';
-
 
 const Display = (props: IDisplayProps) => {
 

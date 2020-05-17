@@ -1,32 +1,38 @@
+$displayCharcoal: #222222
+$calculatorJost: 'Jost', sans-serif
+$upperDispFontColor: #999
+$mainDispFontColor: #fff
+
 .displaysContainer
   display: flex
   flex-direction: column
 
 .upperDisplay
-  background-color: #222222
-  color: #999
+  background-color: $displayCharcoal
+  color: $upperDispFontColor
   font-size: 0.8em
   padding: 1em 1.5em 0 1.5em
   text-align: right
   font-weight: 400
   height: 2em
   letter-spacing: 1px
-  font-family: 'Jost', sans-serif
+  font-family: $calculatorJost
 
 .mainDisplay
-  background-color: #222222
-  color: #fff
+  background-color: $displayCharcoal
+  color: $mainDispFontColor
   font-size: 1.7em
   padding: 0.2em 0.75em 0.6em 0.75em
   text-align: right
   letter-spacing: 3px
-  font-family: 'Jost', sans-serif
+  font-family: $calculatorJost
 
 .successMessage
   position: fixed
-  background-color: #222222
+  background-color: $displayCharcoal
   color: lime
   font-size: initial
   align-self: center
   margin-top: 76px
   font-weight: 500
+  font-family: $calculatorJost

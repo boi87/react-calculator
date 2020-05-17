@@ -3,6 +3,7 @@ import React from "react";
 import CalculatorKey from "../calculatorKey/calculatorKey";
 
 import {IKeyPadProps} from "../../models/calculator.models";
+
 import './keyPad..sass';
 
 const KeyPad = (props: IKeyPadProps) => {
