@@ -3,36 +3,31 @@
 
 .displaysContainer
   @include flexColumnCenter
-  max-width: 10rem
-  overflow-x: auto
-  white-space: nowrap
   background-color: $displayCharcoal
+  max-width: 10rem
 
-.upperDisplay
+@mixin basicDisplay($fontSize, $color, $padding)
   position: relative
   color: $upperDispFontColor
-  font-size: 18px
-  padding: 16px 12px 0px 12px
-  text-align: right
-  font-weight: 400
-  height: 15px
+  font-size: $fontSize
+  color: $color
   font-family: $calculatorJost
+  padding: $padding
+
+.upperDisplay
+  @include basicDisplay(18px, $upperDispFontColor, 16px 12px 0px 12px)
+  text-align: right
+  height: 15px
 
 .mainDisplay
-  position: relative
-  color: $mainDispFontColor
-  font-size: 38px
-  padding: 0px 12px 19px 12px
+  @include basicDisplay(38px, $mainDispFontColor, 0px 12px 19px 12px)
   text-align: right
   letter-spacing: 1px
-  font-family: $calculatorJost
 
-.successMessage
+.successMessageDisplay
+  @include basicDisplay(initial, $successMsgColor, unset)
   position: fixed
-  background-color: $displayCharcoal
   color: $successMsgColor
   font-size: initial
   align-self: center
   margin-top: 80px
-  font-weight: 500
-  font-family: $calculatorJost

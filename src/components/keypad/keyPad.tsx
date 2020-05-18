@@ -12,7 +12,7 @@ const KeyPad = (props: IKeyPadProps) => {
 
             <CalculatorKey class={'keyAc'} handleClick={props.onInputEvent} value={'AC'}/>
             <CalculatorKey
-                class={'keySave'}
+                class={props.currentResult === '' ? 'keySaveDisabled' : 'keySaveEnabled'}
                 handleClick={props.onSaveEvent}
                 value={'SAVE'}
                 currentResult={props.currentResult}/>

@@ -29,7 +29,7 @@ const Display = (props: IDisplayProps) => {
                 <span>{mainDisplay}</span>
             </div>
             {props.saved ?
-                <div className={'successMessage'}>SAVED!</div>
+                <div className={'successMessageDisplay'}>SAVED!</div>
                 : null
             }
         </div>
