@@ -3,19 +3,23 @@
 
 .displaysContainer
   @include flexColumnCenter
+  max-width: 10rem
+  overflow-x: auto
+  white-space: nowrap
+  background-color: $displayCharcoal
 
 .upperDisplay
-  background-color: $displayCharcoal
+  position: relative
   color: $upperDispFontColor
-  font-size: 0.8em
-  padding: 15px 12px 0px 12px
+  font-size: 18px
+  padding: 16px 12px 0px 12px
   text-align: right
   font-weight: 400
-  height: 2em
+  height: 15px
   font-family: $calculatorJost
 
 .mainDisplay
-  background-color: $displayCharcoal
+  position: relative
   color: $mainDispFontColor
   font-size: 38px
   padding: 0px 12px 19px 12px
@@ -29,6 +33,6 @@
   color: $successMsgColor
   font-size: initial
   align-self: center
-  margin-top: 91px
+  margin-top: 80px
   font-weight: 500
   font-family: $calculatorJost

@@ -21,7 +21,7 @@ class Calculator extends React.Component<any, ICalculatorState> {
             mainDisplay: '0',
         },
         showEqual: false,
-        saved: true
+        saved: false
     };
 
     setNumberOne = (input: { value: string, displayValue: string | undefined }) => {
