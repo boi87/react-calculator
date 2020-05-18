@@ -12,10 +12,10 @@ const Display = (props: IDisplayProps) => {
 
     const formatNumbers = (num: string) => (num.toString().replace(thousandsSeparatorRgx, '$1,'));
 
-    const numbers = props.upperDisplay.replace(numsAndDecimalDotRgx, ' ').split(' ').filter(num => !isNaN(+num));
-    const operators = props.upperDisplay.split('').filter(op => isNaN(+op) && op !== '.');
+    const numbers = props.headerDisplay.replace(numsAndDecimalDotRgx, ' ').split(' ').filter(num => !isNaN(+num));
+    const operators = props.headerDisplay.split('').filter(op => isNaN(+op) && op !== '.');
 
-    const mainDisplay = formatNumbers(props.mainDisplay).substr(0, 15);
+    const mainDisplay = formatNumbers(props.resultDisplay).substr(0, 15);
 
     const upperDisplay: string[] = [];
     numbers.map((num, i) => upperDisplay.push(formatNumbers(num.replace(leadingZerosRgx, "")), operators[i]));

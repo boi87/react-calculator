@@ -4,8 +4,8 @@
   grid-column-end: 4
   grid-column-start: 2
 
-@mixin keyPadKey()
-  background-color: $standardKeyBackground
+@mixin keyPadKey($color)
+  background-color: $color
   position: relative
   text-align: center
   font-family: $calculatorJost
@@ -13,11 +13,7 @@
   color: white
   font-weight: normal
 
-@mixin funcKey()
-  background-color: $funcKeyBackground
-
-
-.keyPadKeysContainer
+.keyPadContainer
   background-color: #c4726c
   display: grid
   grid-template-columns: repeat(4, 1fr)
@@ -25,8 +21,8 @@
   width: 10rem
   height: 12rem
 
-.keyPadKeysContainer *:active::before,
-.keyPadKeysContainer > .is-depressed::before
+.keyPadContainer *:active::before,
+.keyPadContainer > .is-depressed::before
   background-color: rgba(0, 0, 0, 0.2)
   bottom: 0
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5) inset
@@ -40,29 +36,26 @@
   font-family: $calculatorJost
 
 .standardKey
-  @include keyPadKey()
+  @include keyPadKey($standardKeyBackground)
 
-.keyOperator
-  @include keyPadKey()
-  background-color: $operatorKeyBackground
+.operatorKey
+  @include keyPadKey($operatorKeyBackground)
 
-.keyZero
-  @include keyPadKey()
+.zeroKey
+  @include keyPadKey($standardKeyBackground)
   @include largerKey()
   text-align: left
   padding-left: 16px
 
-.keySaveDisabled
-  @include keyPadKey()
+.saveKeyDisabled
+  @include keyPadKey($funcKeyBackground)
   @include largerKey()
-  opacity: 0.5
+  opacity: 0.2
 
-.keySaveEnabled
-  @include keyPadKey()
+.saveKeyEnabled
+  @include keyPadKey($funcKeyBackground)
   @include largerKey()
-  @include funcKey()
 
-.keyAc
-  @include keyPadKey()
-  @include funcKey()
+.ackey
+  @include keyPadKey($funcKeyBackground)
 

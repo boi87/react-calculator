@@ -17,8 +17,8 @@ class Calculator extends React.Component<any, ICalculatorState> {
             operator: '',
             result: '',
             prevResult: '',
-            upperDisplay: ' ',
-            mainDisplay: '0',
+            headerDisplay: ' ',
+            resultDisplay: '0',
         },
         showEqual: false,
         saved: false
@@ -134,8 +134,8 @@ class Calculator extends React.Component<any, ICalculatorState> {
                     operator: '',
                     result: '',
                     prevResult: '',
-                    upperDisplay: ' ',
-                    mainDisplay: '0',
+                    headerDisplay: ' ',
+                    resultDisplay: '0',
                 }
             })
         )
@@ -176,8 +176,8 @@ class Calculator extends React.Component<any, ICalculatorState> {
                 ...state,
                 calculator: {
                     ...state.calculator,
-                    upperDisplay: state.calculator.n1 + state.calculator.operator + state.calculator.n2 + (this.state.showEqual ? '=' : ''),
-                    mainDisplay: this.state.calculator.result.toString() || state.calculator.prevResult.toString() || '0'
+                    headerDisplay: state.calculator.n1 + state.calculator.operator + state.calculator.n2 + (this.state.showEqual ? '=' : ''),
+                    resultDisplay: this.state.calculator.result.toString() || state.calculator.prevResult.toString() || '0'
                 }
             })
         )
@@ -205,6 +205,7 @@ class Calculator extends React.Component<any, ICalculatorState> {
                 dataToExport.append('ipFromJs', ip);
                 axios.post('http://localhost/calculations.php', dataToExport)
                     .then(res => {
+                        console.log(res);
                         if (res.statusText === 'OK') {
                             this.setState(state => ({...state, saved: true}));
                             setTimeout(() => this.setState(state => ({...state, saved: false})), 500)
@@ -219,8 +220,8 @@ class Calculator extends React.Component<any, ICalculatorState> {
         return (
             <div>
                 <div className={'calculator'}>
-                    <Display upperDisplay={this.state.calculator.upperDisplay}
-                             mainDisplay={this.state.calculator.mainDisplay}
+                    <Display headerDisplay={this.state.calculator.headerDisplay}
+                             resultDisplay={this.state.calculator.resultDisplay}
                              saved={this.state.saved}/>
                     <KeyPad
                         onInputEvent={this.handleInput}
