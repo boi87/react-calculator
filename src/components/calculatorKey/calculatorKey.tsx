@@ -9,7 +9,7 @@ const CalculatorKey = (props: ICalculatorKeyProps) => {
         <button
             color={'green'}
             disabled={props.currentResult === ''}
-            className={props.class || 'standardKey'}
+            className={props.class}
             onClick={() => props.handleClick({value: props.value, displayValue: props.displayValue})}>
             {props.displayValue || props.value}
         </button>
