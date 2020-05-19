@@ -186,11 +186,9 @@ class Calculator extends React.Component<any, ICalculatorState> {
     getIpAddress = (): Promise<string> => {
         return new Promise((resolve, reject) => {
             try {
-                fetch('https://api.ipify.org?format=jsonp?callback=?', {
-                    method: 'GET',
-                    headers: {},
-                }).then(res => {
-                    resolve(res.text());
+                axios.get('https://api.ipify.org?format=jsonp?callback=?')
+                    .then(res => {
+                        resolve(res.data);
                 })
             } catch (err) {
                 reject(err);
@@ -205,8 +203,7 @@ class Calculator extends React.Component<any, ICalculatorState> {
                 dataToExport.append('ipFromJs', ip);
                 axios.post('http://localhost/calculations.php', dataToExport)
                     .then(res => {
-                        console.log(res);
-                        if (res.statusText === 'OK') {
+                        if (res.data === 'ok') {
                             this.setState(state => ({...state, saved: true}));
                             setTimeout(() => this.setState(state => ({...state, saved: false})), 500)
                         }
