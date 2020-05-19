@@ -201,7 +201,7 @@ class Calculator extends React.Component<any, ICalculatorState> {
                 const dataToExport = new URLSearchParams();
                 dataToExport.append('result', this.state.calculator.result);
                 dataToExport.append('ipFromJs', ip);
-                axios.post('http://localhost/calculations.php', dataToExport)
+                axios.post('http://localhost/save_calc.php', dataToExport)
                     .then(res => {
                         if (res.data === 'ok') {
                             this.setState(state => ({...state, saved: true}));
