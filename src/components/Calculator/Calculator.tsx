@@ -189,7 +189,7 @@ class Calculator extends React.Component<any, ICalculatorState> {
                 axios.get('https://api.ipify.org?format=jsonp?callback=?')
                     .then(res => {
                         resolve(res.data);
-                })
+                    })
             } catch (err) {
                 reject(err);
             }
